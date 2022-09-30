@@ -2,22 +2,27 @@
 <html>
 <head>
 <script id="vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vPosition;
+attribute vec4 vPosition;  // vPosition에 버텍스의 local space를 담는다 
 
-void
-main()
+void main() // 삼각형이면 꼭짓점 3개니까 main을 3번 돌린다. 근데 이건 병렬처리. 그래서 gpu가 빠른거임.
 {
-    gl_Position = vPosition;
+    gl_Position = vPosition; 
+
+    // 로컬 -> 카메라 space로 바꾼다. 무조건 하는 과정.
+    // vPosition으로 우리가 뭘 하든 상관 없으니 결국 gl_Position으로 들어갈 것이고
+    // 나머지 파이프라인 단계가 gl_Position에 정의 된 것으로 진행된다.
 }
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
 precision mediump float;
 
-void
-main()
+void main() // fragment에서 버텍스 하나하나마다 main을 돌리는데 병렬로 처리되는거임
 {
     gl_FragColor = vec4( 0.0, 0.0, 1.0, 1.0 );
+    
+    // gl_FragColor가 하나의 componetnt의 값이된다.
+    // 버텍스 하나하나마다 섹을 채워주는거지
 }
 </script>
 

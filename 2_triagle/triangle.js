@@ -1,9 +1,13 @@
 var gl;
 var points;
 
+// 전체 페이지가 완전히 로드 했을 때 불리는 콜백 함수
 window.onload = function init() {
   var canvas = document.getElementById('gl-canvas');
 
+  // GL한테 canvas HTML 태그에다가 그려줄거다! 라고 알려주면서
+  // 이걸로 webGL과 연결을해서 gl을 받아오고
+  //  gl.뭐시기로 그림을 그리는.
   gl = WebGLUtils.setupWebGL(canvas);
   if (!gl) {
     alert("WebGL isn't available");
