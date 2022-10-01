@@ -17,6 +17,7 @@ window.onload = function init() {
     vec2(-0.5, -0.5), // v1
     vec2(0.5, 0.5), // v2
     vec2(0.5, -0.5), // v3
+    vec2(-0.7, -0.25), // v4 내가 추가한 실험 vertex
   ];
 
   gl.viewport(0, 0, canvas.width, canvas.height);
@@ -39,12 +40,12 @@ window.onload = function init() {
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
-  var utransform = gl.getUniformLocation(program, "uTransform");
-  
+  var utransform = gl.getUniformLocation(program, 'uTransform');
+
   render();
 };
 
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  gl.drawArrays(gl.TRIANGLE_FAN, 0, 5);
 }
