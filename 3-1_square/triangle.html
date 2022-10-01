@@ -3,13 +3,13 @@
 <head>
 <script id="vertex-shader" type="x-shader/x-vertex">
 attribute vec4 vPosition;
+uniform vec4 uOffset;
 
-uniform vec4 utransformation;
-
-void
-main()
+void main()
 {
-    gl_Position = vPosition+ utransformation;
+
+    gl_Position = vPosition + uOffset;
+
 }
 </script>
 
