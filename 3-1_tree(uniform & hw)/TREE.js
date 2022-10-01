@@ -39,7 +39,7 @@ window.onload = function init() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   //나뭇잎 초록색
-  gl.uniform4fv(uColor, [0, 1, 0, 1]);
+  gl.uniform4fv(uColor, [0, 1, 0, 1]); //마지막 v는 [0,1,0,1] vec4 array 사용한다는 뜻
   gl.drawArrays(gl.TRIANGLES, 0, 9);
 
   // 나무 몸통 갈색

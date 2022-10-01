@@ -114,7 +114,6 @@ window.onload = function init() {
   gl.bufferData(gl.ARRAY_BUFFER, flatten(stripVertices), gl.STATIC_DRAW);
 
   // Associate out shader variables with our data buffer
-  gl.bindBuffer(gl.ARRAY_BUFFER, stripBufferId);
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
   gl.disableVertexAttribArray(vColor); // We disable the vertex attribute array for the vertexColorAttribute and use a constant color again.

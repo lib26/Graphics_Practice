@@ -11,7 +11,7 @@ void
 main()
 {
     gl_Position = vPosition;
-	  fColor = gl_Position * 0.5 + 0.5;
+	fColor = gl_Position * 0.5 + 0.5; // 좌표값을 이용해서 색을 지정한다.
 }
 </script>
 
@@ -23,7 +23,6 @@ varying vec4 fColor;
 void
 main()
 {
-    //gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
 	  gl_FragColor = fColor;
 }
 </script>
