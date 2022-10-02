@@ -24,6 +24,9 @@ window.onload = function init() {
   var vResolution = gl.getUniformLocation(program, 'uResolution');
   var fColor = gl.getUniformLocation(program, 'uColor');
 
+  // set the resolution
+  gl.uniform2f(vResolution, gl.canvas.width, gl.canvas.height);
+
   // Load the data into the GPU
   var bufferId = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
@@ -38,9 +41,6 @@ window.onload = function init() {
   var offset = 0; // start at the beginning of the buffer
   gl.vertexAttribPointer(vPosition, size, type, normalize, stride, offset);
   gl.enableVertexAttribArray(vPosition);
-
-  // set the resolution
-  gl.uniform2f(vResolution, gl.canvas.width, gl.canvas.height);
 
   // draw 50 random rectangles in random colors
   for (var ii = 0; ii < 50; ++ii) {
