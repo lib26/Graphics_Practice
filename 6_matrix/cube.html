@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <script id="vertex-shader" type="x-shader/x-vertex">
@@ -9,7 +8,7 @@ varying vec4 fColor;
 
 uniform vec3 theta;
 
-void main()
+void main() 
 {
     // Compute the sines and cosines of theta for each of
     //   the three axes in one computation.
@@ -36,13 +35,13 @@ void main()
 
     fColor = vColor;
     gl_Position = rz * ry * rx * vPosition;
-}
+} 
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
 
 precision mediump float;
-
+   
 varying vec4 fColor;
 
 void
@@ -55,21 +54,22 @@ main()
 <script type="text/javascript" src="../Common/webgl-utils.js"></script>
 <script type="text/javascript" src="../Common/initShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
-<script type="text/javascript" src="geometry.js"></script>
-<script type="text/javascript" src="microphone.js"></script>
+<script type="text/javascript" src="cube.js"></script>
 
 <body>
-    ID: 201835527 NAME: 임인범  <br>
+
+
+
+
 <canvas id="gl-canvas" width="512"" height="512">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
-
+   
 <br/>
 
 <button id= "xButton">Rotate X</button>
 <button id= "yButton">Rotate Y</button>
 <button id= "zButton">Rotate Z</button>
-<button id = "ButtonT">Toggle Rotation</button>
 
 </body>
 </html>
