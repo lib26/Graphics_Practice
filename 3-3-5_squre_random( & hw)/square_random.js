@@ -63,7 +63,7 @@ window.onload = function init() {
     var primitiveType = gl.TRIANGLES;
     var offset = 0;
     var count = 6;
-    gl.drawArrays(primitiveType, offset, count);
+    gl.drawArrays(primitiveType, offset, count); // 버퍼 계속 업데이트 해주니까 0 -6인거임
   }
 };
 
@@ -87,7 +87,7 @@ function setRectangle(gl, x, y, width, height) {
 
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]),
+    new Float32Array([x1, y1, x2, y1, x1, y2, x2, y1, x2, y2, x1, y2]), // 여기서 버퍼에 업데이트하는 느낌.
     gl.STATIC_DRAW
   );
 }

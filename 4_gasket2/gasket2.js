@@ -65,7 +65,7 @@ function divideTriangle(a, b, c, count) {
     var ac = mix(a, c, 0.5);
     var bc = mix(b, c, 0.5);
 
-    --count;
+    count--;
 
     // three new triangles
 
