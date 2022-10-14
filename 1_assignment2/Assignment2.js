@@ -172,6 +172,83 @@ function drawBackground() {
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 6);
 }
 
+function drawTree() {
+  // Tree vertices
+  var treeVertices = [
+    vec2(-0.5, 0),
+    vec2(-0.3, -0.25),
+    vec2(-0.7, -0.25),
+    vec2(-0.5, -0.15),
+    vec2(-0.25, -0.4),
+    vec2(-0.75, -0.4),
+    vec2(0.45, -0.4),
+    vec2(0.55, -0.4),
+    vec2(0.45, -0.65),
+    vec2(0.45, -0.65),
+    vec2(0.55, -0.65),
+    vec2(0.55, -0.4),
+  ];
+
+  var treeBufferId = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId);
+  gl.bufferData(gl.ARRAY_BUFFER, flatten(treeVertices), gl.STATIC_DRAW);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId);
+
+  var vPosition = gl.getAttribLocation(program, 'vPosition');
+  gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+
+  var colors = [
+    vec4(1, 1, 1, 1),
+    vec4(0, 0.2, 0, 0.5),
+    vec4(0, 0.2, 0, 0.5),
+    vec4(1, 1, 1, 1),
+    vec4(0, 0.2, 0, 0.5),
+    vec4(0, 0.2, 0, 0.5),
+  ];
+
+  var vertexColorBufferId = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBufferId);
+  gl.bufferData(gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW);
+
+  var vColor = gl.getAttribLocation(program, 'vColor');
+  gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(vColor);
+
+  gl.enableVertexAttribArray(vPosition);
+  gl.uniform4fv(uOffset, [0.6, 0.05, 0, 0]);
+  // Render tree
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+  // Tree vertices
+  var treeVertices2 = [
+    vec2(-0.45, -0.4),
+    vec2(-0.55, -0.4),
+    vec2(-0.45, -0.65),
+    vec2(-0.45, -0.65),
+    vec2(-0.55, -0.65),
+    vec2(-0.55, -0.4),
+  ];
+
+  var treeBufferId2 = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId2);
+  gl.bufferData(gl.ARRAY_BUFFER, flatten(treeVertices2), gl.STATIC_DRAW);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId2);
+
+  var vPosition = gl.getAttribLocation(program, 'vPosition');
+  gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+
+  var vColor = gl.getAttribLocation(program, 'vColor');
+  gl.disableVertexAttribArray(vColor);
+  gl.vertexAttrib4f(vColor, 0.5, 0.25, 0, 1); // green
+
+  gl.enableVertexAttribArray(vPosition);
+  gl.uniform4fv(uOffset, [0.6, 0.05, 0, 0]);
+  // Render tree
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+}
+
 function drawMountain() {
   // Mountain vertices
   var mountainVertices = [
@@ -202,66 +279,6 @@ function drawMountain() {
   gl.enableVertexAttribArray(vPosition);
   gl.uniform4fv(uOffset, [0, 0, 0, 0]);
   // Render mountain
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
-  gl.drawArrays(gl.TRIANGLES, 3, 6);
-}
-
-function drawTree() {
-  // Tree vertices
-  var treeVertices = [
-    vec2(0.1, 0),
-    vec2(-0.1, -0.25),
-    vec2(0.3, -0.25),
-    vec2(0.1, -0.15),
-    vec2(-0.15, -0.4),
-    vec2(0.35, -0.4),
-  ];
-
-  var treeBufferId = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId);
-  gl.bufferData(gl.ARRAY_BUFFER, flatten(treeVertices), gl.STATIC_DRAW);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId);
-
-  var vPosition = gl.getAttribLocation(program, 'vPosition');
-  gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-
-  var vColor = gl.getAttribLocation(program, 'vColor');
-  gl.disableVertexAttribArray(vColor);
-  gl.vertexAttrib4f(vColor, 0, 0.2, 0, 0.5); // green
-
-  gl.enableVertexAttribArray(vPosition);
-  gl.uniform4fv(uOffset, [0.6, 0.05, 0, 0]);
-  // Render tree
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
-  gl.drawArrays(gl.TRIANGLES, 3, 6);
-
-  // Tree vertices
-  var treeVertices2 = [
-    vec2(0.05, -0.4),
-    vec2(0.15, -0.4),
-    vec2(0.05, -0.65),
-    vec2(0.05, -0.65),
-    vec2(0.15, -0.65),
-    vec2(0.15, -0.4),
-  ];
-
-  var treeBufferId2 = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId2);
-  gl.bufferData(gl.ARRAY_BUFFER, flatten(treeVertices2), gl.STATIC_DRAW);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, treeBufferId2);
-
-  var vPosition = gl.getAttribLocation(program, 'vPosition');
-  gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-
-  var vColor = gl.getAttribLocation(program, 'vColor');
-  gl.disableVertexAttribArray(vColor);
-  gl.vertexAttrib4f(vColor, 0.5, 0.25, 0, 1); // green
-
-  gl.enableVertexAttribArray(vPosition);
-  gl.uniform4fv(uOffset, [0.6, 0.05, 0, 0]);
-  // Render tree
   gl.drawArrays(gl.TRIANGLES, 0, 3);
   gl.drawArrays(gl.TRIANGLES, 3, 6);
 }
