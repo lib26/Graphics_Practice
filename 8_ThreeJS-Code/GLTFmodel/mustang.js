@@ -13,10 +13,10 @@ window.onload = function init() {
 
   // 카메라 설정
   camera = new THREE.PerspectiveCamera(
-    75,
+    75, // 광학, 망원
     canvas.width / canvas.height,
-    0.1,
-    1000
+    0.1, // near
+    1000 // far
   );
   camera.rotation.y = (45 / 180) * Math.PI;
   camera.position.x = 150;
