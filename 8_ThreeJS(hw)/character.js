@@ -17,8 +17,8 @@ window.onload = function init() {
   );
   camera.rotation.y = (45 / 180) * Math.PI;
   camera.position.x = 0;
-  camera.position.y = 500;
-  camera.position.z = 0;
+  camera.position.y = 0;
+  camera.position.z = 300;
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -40,24 +40,41 @@ window.onload = function init() {
 
   //
   const mainLoader = async () => {
-    const [objectA, objectB] = await Promise.all([
-      loader.loadAsync('./model-h/scene.gltf'),
-      loader.loadAsync('./model-c/scene.gltf'),
+    const [hammer_1, hammer_2, hammer_3, crown, entrance] = await Promise.all([
+      loader.loadAsync('./model/hammer_1.glb'),
+      loader.loadAsync('./model/hammer_2.glb'),
+      loader.loadAsync('./model/hammer_3.glb'),
+      loader.loadAsync('./model/crown.glb'),
+      loader.loadAsync('./model/entrance.glb'),
     ]);
 
-    scene.add(objectA.scene);
-    scene.add(objectB.scene);
+    scene.add(hammer_1.scene);
+    scene.add(hammer_2.scene);
+    scene.add(hammer_3.scene);
+    scene.add(crown.scene);
+    scene.add(entrance.scene);
 
-    objectA.scene.position.set(100, 0, 0);
-    objectA.scene.scale.set(50, 50, 50);
+    hammer_1.scene.position.set(0, 0, 0);
+    hammer_1.scene.scale.set(50, 50, 50);
 
-    objectB.scene.position.set(0, 0, 0);
-    objectB.scene.scale.set(0.5, 0.5, 0.5);
+    hammer_2.scene.position.set(-100, 0, 0);
+    hammer_2.scene.scale.set(0.05, 0.05, 0.05);
+
+    hammer_3.scene.position.set(0, 0, 0);
+    hammer_3.scene.scale.set(0.05, 0.05, 0.05);
+
+    crown.scene.position.set(100, 0, 0);
+    crown.scene.scale.set(25, 25, 25);
+
+    entrance.scene.position.set(0, 0, 0);
+    entrance.scene.scale.set(5, 5, 5);
 
     const animate = () => {
       requestAnimationFrame(animate);
-      objectA.scene.rotation.y += 0.01;
-      objectB.scene.rotation.y -= 0.01;
+      hammer_1.scene.rotation.y += 0.01;
+      hammer_2.scene.rotation.y -= 0.01;
+      hammer_3.scene.rotation.x += 0.01;
+
       renderer.render(scene, camera);
       controls.update();
     };
