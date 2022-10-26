@@ -43,7 +43,7 @@ window.onload = function init() {
       character = gltf.scene.children[0];
       character.scale.set(0.5, 0.5, 0.5);
       scene.add(gltf.scene);
-      animate();
+      //animate();
     },
     undefined,
     function (error) {
