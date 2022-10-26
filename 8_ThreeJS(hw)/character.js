@@ -37,23 +37,62 @@ window.onload = function init() {
   scene.add(light3);
 
   const loader = new THREE.GLTFLoader();
-  loader.load(
-    './model/scene.gltf',
-    function (gltf) {
-      character = gltf.scene.children[0];
-      character.scale.set(0.5, 0.5, 0.5);
-      scene.add(gltf.scene);
-      //animate();
-    },
-    undefined,
-    function (error) {
-      console.error(error);
-    }
-  );
+  //
+  const mainLoader = async () => {
+    const [objectA, objectB] = await Promise.all([
+      loader.loadAsync('./model-h/scene.gltf'),
+      loader.loadAsync('./model-c/scene.gltf'),
+    ]);
+    scene.add(objectA.scene);
+    scene.add(objectB.scene);
+    objectA.scene.position.set(1, 0, 0);
+    objectA.scene.scale.set(50, 50, 50);
+    objectB.scene.position.set(-1, 0, 0);
 
-  function animate() {
-    character.rotation.x += 0.05;
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
+    const animate = () => {
+      requestAnimationFrame(animate);
+      objectA.scene.rotation.y += 0.01;
+      objectB.scene.rotation.y -= 0.01;
+      renderer.render(scene, camera);
+      controls.update();
+    };
+    animate();
+  };
+  mainLoader();
+
+  // //
+  // loader.load(
+  //   './model-h/scene.gltf',
+  //   function (gltf) {
+  //     character = gltf.scene.children[0];
+  //     character.scale.set(50, 50, 50);
+  //     character.position.set(0, 0, 0);
+  //     scene.add(gltf.scene);
+  //   },
+  //   undefined,
+  //   function (error) {
+  //     console.error(error);
+  //   }
+  // );
+
+  // loader.load(
+  //   './model-c/scene.gltf',
+  //   function (gltf) {
+  //     character = gltf.scene.children[0];
+  //     character.scale.set(0.5, 0.5, 0.5);
+  //     character.position.set(0, 0, 0);
+  //     scene.add(gltf.scene);
+  //     animate();
+  //   },
+  //   undefined,
+  //   function (error) {
+  //     console.error(error);
+  //   }
+  // );
+
+  // function animate() {
+  //   character.rotation.x += 0.05;
+  //   renderer.render(scene, camera);
+  //   requestAnimationFrame(animate);
+  // }
 };
