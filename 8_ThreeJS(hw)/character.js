@@ -17,8 +17,8 @@ window.onload = function init() {
   );
   camera.rotation.y = (45 / 180) * Math.PI;
   camera.position.x = 0;
-  camera.position.y = 150;
-  camera.position.z = 200;
+  camera.position.y = 500;
+  camera.position.z = 0;
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -37,17 +37,22 @@ window.onload = function init() {
   scene.add(light3);
 
   const loader = new THREE.GLTFLoader();
+
   //
   const mainLoader = async () => {
     const [objectA, objectB] = await Promise.all([
       loader.loadAsync('./model-h/scene.gltf'),
       loader.loadAsync('./model-c/scene.gltf'),
     ]);
+
     scene.add(objectA.scene);
     scene.add(objectB.scene);
-    objectA.scene.position.set(1, 0, 0);
+
+    objectA.scene.position.set(100, 0, 0);
     objectA.scene.scale.set(50, 50, 50);
-    objectB.scene.position.set(-1, 0, 0);
+
+    objectB.scene.position.set(0, 0, 0);
+    objectB.scene.scale.set(0.5, 0.5, 0.5);
 
     const animate = () => {
       requestAnimationFrame(animate);
