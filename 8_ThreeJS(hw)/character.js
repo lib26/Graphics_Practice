@@ -16,9 +16,9 @@ window.onload = function init() {
     1000
   );
   camera.rotation.y = (45 / 180) * Math.PI;
-  camera.position.x = 0;
-  camera.position.y = 0;
-  camera.position.z = 300;
+  camera.position.x = 10;
+  camera.position.y = 10;
+  camera.position.z = 0;
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -36,44 +36,52 @@ window.onload = function init() {
   light3.position.set(-5000, 3000, -5000);
   scene.add(light3);
 
-  const loader = new THREE.GLTFLoader();
+  const gltfLoader = new THREE.GLTFLoader();
 
-  //
+  //장애물
+  //obstacle
   const mainLoader = async () => {
-    const [hammer_1, hammer_2, hammer_3, crown, entrance] = await Promise.all([
-      loader.loadAsync('./model/hammer_1.glb'),
-      loader.loadAsync('./model/hammer_2.glb'),
-      loader.loadAsync('./model/hammer_3.glb'),
-      loader.loadAsync('./model/crown.glb'),
-      loader.loadAsync('./model/entrance.glb'),
-    ]);
+    const [hammer_1, hammer_2, hammer_3, obstacle, crown, entrance] =
+      await Promise.all([
+        gltfLoader.loadAsync('./model/hammer_1.glb'),
+        gltfLoader.loadAsync('./model/hammer_2.glb'),
+        gltfLoader.loadAsync('./model/hammer_3.glb'),
+        gltfLoader.loadAsync('./model/obstacle.glb'),
+        gltfLoader.loadAsync('./model/crown.glb'),
+        gltfLoader.loadAsync('./model/entrance.glb'),
+      ]);
 
     scene.add(hammer_1.scene);
     scene.add(hammer_2.scene);
     scene.add(hammer_3.scene);
+    scene.add(obstacle.scene);
     scene.add(crown.scene);
     scene.add(entrance.scene);
 
     hammer_1.scene.position.set(0, 0, 0);
-    hammer_1.scene.scale.set(50, 50, 50);
+    hammer_1.scene.scale.set(4, 4, 4);
 
-    hammer_2.scene.position.set(-100, 0, 0);
-    hammer_2.scene.scale.set(0.05, 0.05, 0.05);
+    hammer_2.scene.position.set(10, 1, 10);
+    hammer_2.scene.scale.set(0.005, 0.005, 0.005);
 
-    hammer_3.scene.position.set(0, 0, 0);
-    hammer_3.scene.scale.set(0.05, 0.05, 0.05);
+    hammer_3.scene.position.set(0, 10, 20);
+    hammer_3.scene.scale.set(0.003, 0.003, 0.003);
 
-    crown.scene.position.set(100, 0, 0);
-    crown.scene.scale.set(25, 25, 25);
+    obstacle.scene.position.set(-10, 0.75, 0);
+    obstacle.scene.scale.set(0.005, 0.005, 0.005);
 
-    entrance.scene.position.set(0, 0, 0);
-    entrance.scene.scale.set(5, 5, 5);
+    crown.scene.position.set(0.5, 2, 0);
+    crown.scene.scale.set(1.5, 1.5, 1.5);
+
+    entrance.scene.position.set(40, 2.5, 40);
+    entrance.scene.scale.set(0.5, 0.5, 0.5);
 
     const animate = () => {
       requestAnimationFrame(animate);
       hammer_1.scene.rotation.y += 0.01;
-      hammer_2.scene.rotation.y -= 0.01;
+      hammer_2.scene.rotation.y -= 0.05;
       hammer_3.scene.rotation.x += 0.01;
+      obstacle.scene.rotation.y += 0.01;
 
       renderer.render(scene, camera);
       controls.update();
