@@ -109,6 +109,7 @@ window.onload = function init() {
       cube.rotation.x = rot;
       cube.rotation.y = rot;
     });
+    console.log(cubes[0].position);
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);
