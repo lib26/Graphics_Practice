@@ -34,10 +34,12 @@ var vertexColors = [
 
 var BASE_HEIGHT = 2.0;
 var BASE_WIDTH = 5.0;
-var LOWER_ARM_HEIGHT = 5.0;
+var LOWER_ARM_HEIGHT = 3.0;
 var LOWER_ARM_WIDTH = 0.5;
-var UPPER_ARM_HEIGHT = 5.0;
+var UPPER_ARM_HEIGHT = 3.0;
 var UPPER_ARM_WIDTH = 0.5;
+var LAST_ARM_HEIGHT = 3.0;
+var LAST_ARM_WIDTH = 0.5;
 
 // Shader transformation matrices
 
@@ -48,8 +50,9 @@ var modelViewMatrix, projectionMatrix;
 var Base = 0;
 var LowerArm = 1;
 var UpperArm = 2;
+var LastArm = 3;
 
-var theta = [0, 0, 0];
+var theta = [0, 0, 0, 0];
 
 var angle = 0;
 
@@ -151,6 +154,9 @@ window.onload = function init() {
   document.getElementById('slider3').onchange = function (event) {
     theta[2] = event.target.value;
   };
+  // document.getElementById('slider4').onchange = function (event) {
+  //   theta[3] = event.target.value;
+  // };
 
   modelViewMatrixLoc = gl.getUniformLocation(program, 'modelViewMatrix');
 
@@ -168,9 +174,19 @@ window.onload = function init() {
 
 function base() {
   var s = scale4(BASE_WIDTH, BASE_HEIGHT, BASE_WIDTH);
-  var instanceMatrix = mul(translate(0, 0, 0.5 * BASE_HEIGHT, 0.0), s);
+  var instanceMatrix = mult(translate(0.0, 0.5 * BASE_WIDTH, 0.0), s);
   var t = mult(modelViewMatrix, instanceMatrix);
-  gl.uniformMatrix4fv(modelViewMatrix, false, flatten(t));
+  gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(t));
+  gl.drawArrays(gl.TRIANGLES, 0, NumVertices);
+}
+
+//----------------------------------------------------------------------------
+
+function lowerArm() {
+  var s = scale4(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH);
+  var instanceMatrix = mult(translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0), s);
+  var t = mult(modelViewMatrix, instanceMatrix);
+  gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(t));
   gl.drawArrays(gl.TRIANGLES, 0, NumVertices);
 }
 
@@ -180,19 +196,19 @@ function upperArm() {
   var s = scale4(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH);
   var instanceMatrix = mult(translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0), s);
   var t = mult(modelViewMatrix, instanceMatrix);
-  gl.uniformMatrix4fv(modelViewMatrix, false, flatten(t));
+  gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(t));
   gl.drawArrays(gl.TRIANGLES, 0, NumVertices);
 }
 
 //----------------------------------------------------------------------------
 
-function lowerArm() {
-  var s = scale4(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH);
-  var instanceMatrix = mult(translate(0.0, 0 * LOWER_ARM_HEIGHT, 0.0), s);
-  var t = mult(modelViewMatrix, instanceMatrix);
-  gl.uniformMatrix4fv(modelViewMatrix, false, flatten(t));
-  gl.drawArrays(gl.TRIANGLES, 0, NumVertices);
-}
+// function lastArm() {
+//   var s = scale4(LAST_ARM_WIDTH, LAST_ARM_HEIGHT, LAST_ARM_WIDTH);
+//   var instanceMatrix = mult(translate(0.0, 0.5 * LAST_ARM_HEIGHT, 0.0), s);
+//   var t = mult(modelViewMatrix, instanceMatrix);
+//   gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(t));
+//   gl.drawArrays(gl.TRIANGLES, 0, NumVertices);
+// }
 
 //----------------------------------------------------------------------------
 
@@ -211,7 +227,14 @@ var render = function () {
     translate(0.0, LOWER_ARM_HEIGHT, 0.0)
   );
   modelViewMatrix = mult(modelViewMatrix, rotate(theta[UpperArm], 0, 0, 1));
-  lowerArm();
+  upperArm();
+
+  modelViewMatrix = mult(
+    modelViewMatrix,
+    translate(0.0, UPPER_ARM_HEIGHT, 0.0)
+  );
+  // modelViewMatrix = mult(modelViewMatrix, rotate(theta[LastArm], 0, 0, 1));
+  // lastArm();
 
   requestAnimFrame(render);
 };
