@@ -62,7 +62,7 @@ function quad(a, b, c, d) {
 // Each face determines two triangles
 // quad 하나는 정육면체를 구성하는 면중 1개를 의미
 function colorCube() {
-  quad(1, 0, 3, 2); 
+  quad(1, 0, 3, 2);
   quad(2, 3, 7, 6);
   quad(3, 0, 4, 7);
   quad(6, 5, 1, 2);
@@ -147,12 +147,17 @@ var render = function () {
 
   eye = vec3(
     radius * Math.cos(theta) * Math.sin(phi), // X
-    radius * Math.sin(theta),                 // Y
-    radius * Math.cos(theta) * Math.cos(phi)  // Z
+    radius * Math.sin(theta), // Y
+    radius * Math.cos(theta) * Math.cos(phi) // Z
   ); // eye point
-  mvMatrix = lookAt(eye, at, up); // 카메라 위치, 어디를 보는지인데 위에서 0,0,0 이라 원점을 바라본다 , 광원처리할 때 사용하는 것 => lookAt을 하면 modelview matrix가 구해짐.
-  gl.uniformMatrix4fv(modelView, false, flatten(mvMatrix)); // 유니폼으로 보내준다. 그럼 쉐이더에서 받고 모든 위치에 곱해준다. 그러면 버텍스들이 카메라 위치에서의 좌표값으로 바뀐다.
+  mvMatrix = lookAt(eye, at, up);
+  // 카메라 위치, 어디를 보는지인데 위에서 0,0,0 이라 원점을 바라본다
+  // 광원처리할 때 사용하는 것 => lookAt을 하면 modelview matrix가 구해짐.
+  gl.uniformMatrix4fv(modelView, false, flatten(mvMatrix));
+  // 유니폼으로 보내준다.
+  // 그럼 쉐이더에서 받고 모든 위치에 곱해준다.
+  // 그러면 버텍스들이 카메라 위치에서의 좌표값으로 바뀐다.
   // projection은 안해줬으니까 parallel projection이고, view volume이 2인 정사각형
-  gl.drawArrays(gl.TRIANGLES, 0, numVertices); 
+  gl.drawArrays(gl.TRIANGLES, 0, numVertices);
   requestAnimFrame(render);
 };

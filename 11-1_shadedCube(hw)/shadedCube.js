@@ -18,7 +18,6 @@ var vertices = [
   vec4(-0.5, -0.5, -0.5, 1.0),
   vec4(-0.5, 0.5, -0.5, 1.0),
   vec4(0.5, 0.5, -0.5, 1.0),
-
   vec4(0.5, -0.5, -0.5, 1.0),
 ];
 
@@ -48,6 +47,7 @@ var thetaLoc;
 var flag = true;
 
 function quad(a, b, c, d) {
+  // n 벡터 구해주는 식
   var t1 = subtract(vertices[b], vertices[a]);
   var t2 = subtract(vertices[c], vertices[b]);
   //outer product
@@ -123,9 +123,12 @@ window.onload = function init() {
   //view
   projection = ortho(-1, 1, -1, 1, -100, 100);
 
+  // ambient일 때 무슨 색 가질거야? 그거에서 반사가 얼마나 될거냐? 이걸 곱한거임
   var ambientProduct = mult(lightAmbient, materialAmbient);
   var diffuseProduct = mult(lightDiffuse, materialDiffuse);
   var specularProduct = mult(lightSpecular, materialSpecular);
+
+  //
 
   document.getElementById('ButtonX').onclick = function () {
     axis = xAxis;
@@ -143,6 +146,8 @@ window.onload = function init() {
     flag = !flag;
     render();
   };
+
+  //
 
   gl.uniform4fv(
     gl.getUniformLocation(program, 'ambientProduct'),
@@ -162,6 +167,7 @@ window.onload = function init() {
   );
 
   gl.uniform1f(gl.getUniformLocation(program, 'shininess'), materialShininess);
+
   gl.uniformMatrix4fv(
     gl.getUniformLocation(program, 'projectionMatrix'),
     false,

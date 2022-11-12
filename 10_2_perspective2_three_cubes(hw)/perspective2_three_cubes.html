@@ -19,7 +19,7 @@ void main()
 		0.0,  0.0, 0.0, 1.0 );
 
 
-    gl_Position = sxyz *projectionMatrix*modelViewMatrix*vPosition;
+    gl_Position = sxyz * projectionMatrix * modelViewMatrix * vPosition;
     fColor = vColor;
 } 
 </script>
@@ -29,7 +29,6 @@ void main()
 #ifdef GL_ES
 precision highp float;
 #endif
-
 
 varying vec4 fColor;
 
